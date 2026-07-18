@@ -1,0 +1,346 @@
+/* Shop directory, shop detail, wallets, and the scan/review modal. */
+
+.search-bar {
+  position: relative;
+  margin-bottom: var(--space-6);
+  max-width: 420px;
+}
+
+.search-bar svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border: none;
+  outline: none;
+  background: var(--color-fill);
+  border-radius: var(--radius-pill);
+  font: var(--text-body);
+  color: var(--color-text);
+}
+
+.search-bar input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+.shop-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s var(--ease-standard), box-shadow 0.18s var(--ease-standard);
+}
+
+.shop-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.category-pill {
+  align-self: flex-start;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-fill);
+  color: var(--color-text-secondary);
+  font: var(--text-caption);
+  font-weight: 600;
+}
+
+.shop-card .shop-name {
+  font: var(--text-title3);
+}
+
+.shop-card .shop-desc {
+  font: var(--text-subhead);
+  color: var(--color-text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.shop-card .shop-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.wallet-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font: var(--text-caption);
+  font-weight: 700;
+}
+
+/* Shop detail */
+.shop-hero {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--space-6);
+}
+
+.shop-hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.shop-hero .shop-desc {
+  margin-top: var(--space-3);
+  color: var(--color-text-secondary);
+  font: var(--text-body);
+  max-width: 60ch;
+}
+
+.shop-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 0.5px solid var(--color-separator);
+  flex-wrap: wrap;
+}
+
+.wallet-mini {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.wallet-mini .icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wallet-mini .icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.wallet-mini .amount {
+  font: var(--text-title3);
+}
+
+.wallet-mini .label {
+  font: var(--text-footnote);
+  color: var(--color-text-secondary);
+}
+
+/* Reviews */
+.review-row {
+  padding: var(--space-4) var(--space-5);
+}
+
+.review-row + .review-row {
+  border-top: 0.5px solid var(--color-separator);
+}
+
+.review-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: 4px;
+}
+
+.review-author {
+  font: var(--text-headline);
+}
+
+.review-date {
+  font: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.review-comment {
+  margin-top: 6px;
+  font: var(--text-subhead);
+  color: var(--color-text-secondary);
+}
+
+/* My Wallets */
+.wallet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-5);
+}
+
+.wallet-card-item {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: transform 0.18s var(--ease-standard), box-shadow 0.18s var(--ease-standard);
+}
+
+.wallet-card-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.wallet-card-item .amount {
+  font: var(--text-title1);
+  color: var(--color-accent);
+  letter-spacing: -0.01em;
+}
+
+/* Scan sheet (modal) */
+.scan-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 14, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.scan-sheet {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-bg-grouped);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  max-height: 90dvh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-elevated);
+}
+
+.scan-sheet .grabber {
+  display: none;
+}
+
+.scan-sheet .sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+#qr-reader {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000;
+}
+
+#qr-reader video {
+  border-radius: var(--radius-lg);
+}
+
+.scan-status {
+  margin-top: var(--space-4);
+  text-align: center;
+  font: var(--text-subhead);
+  color: var(--color-text-secondary);
+}
+
+.scan-status.success {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.scan-status.error {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.result-burst {
+  text-align: center;
+  padding: var(--space-6) 0;
+}
+
+.result-burst.compact {
+  padding: var(--space-2) 0 var(--space-5);
+}
+
+.result-burst .check {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--space-4);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-success) 16%, transparent);
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-burst .check svg {
+  width: 36px;
+  height: 36px;
+}
+
+.review-prompt .field {
+  align-items: center;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .scan-sheet-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .scan-sheet {
+    max-width: none;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    padding-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .scan-sheet .grabber {
+    display: block;
+    width: 36px;
+    height: 5px;
+    border-radius: var(--radius-pill);
+    background: var(--color-fill-strong);
+    margin: 0 auto var(--space-4);
+  }
+}

@@ -1,0 +1,54 @@
+.qr-display {
+  margin-top: var(--space-5);
+  text-align: center;
+  padding: var(--space-5);
+  background: var(--color-fill);
+  border-radius: var(--radius-lg);
+}
+
+.qr-display img {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto var(--space-3);
+  border-radius: var(--radius-md);
+  background: #fff;
+  padding: var(--space-2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.qr-display .amounts {
+  font: var(--text-headline);
+}
+
+.qr-display .amounts .cashback {
+  color: var(--color-success);
+}
+
+/* Rating summary card, shown prominently on the shop dashboard */
+.rating-summary {
+  text-align: center;
+}
+
+.rating-summary .big-number {
+  font: 800 40px/1.1 var(--font-family);
+  letter-spacing: -0.02em;
+}
+
+.rating-summary .stars {
+  margin: var(--space-2) 0;
+  justify-content: center;
+}
+
+.dashboard-columns {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-5);
+  align-items: start;
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 860px) {
+  .dashboard-columns {
+    grid-template-columns: 1fr;
+  }
+}

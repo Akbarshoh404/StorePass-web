@@ -1,0 +1,718 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: var(--text-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Typography helpers */
+.text-large-title { font: var(--text-large-title); }
+.text-title1 { font: var(--text-title1); }
+.text-title2 { font: var(--text-title2); }
+.text-title3 { font: var(--text-title3); }
+.text-headline { font: var(--text-headline); }
+.text-body { font: var(--text-body); }
+.text-footnote { font: var(--text-footnote); }
+.text-caption { font: var(--text-caption); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+
+/* Brand lockup, reused in nav bars, footer, landing page */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font: var(--text-headline);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--color-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 800 15px/1 var(--font-family);
+  flex-shrink: 0;
+}
+
+.brand-mark.small {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* Card */
+.card {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-card);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 14px 24px;
+  font: var(--text-headline);
+  cursor: pointer;
+  transition: transform 0.12s var(--ease-standard), opacity 0.12s var(--ease-standard),
+    background-color 0.12s var(--ease-standard);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #ffffff;
+  width: 100%;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--color-accent) 32%, transparent);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent-pressed);
+}
+.btn-primary:active:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+.btn-secondary {
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+  border: 1px solid var(--color-separator);
+  width: 100%;
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-fill);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--color-danger);
+}
+.btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+}
+
+.btn-fill {
+  background: var(--color-fill);
+  color: var(--color-accent);
+}
+.btn-fill:hover:not(:disabled) {
+  background: var(--color-fill-strong);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-accent);
+  padding: 8px 12px;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--color-accent-soft);
+}
+
+.btn-icon {
+  padding: 10px;
+  border-radius: 50%;
+  background: var(--color-fill);
+  color: var(--color-text);
+}
+.btn-icon:hover:not(:disabled) {
+  background: var(--color-fill-strong);
+  transform: scale(1.06);
+}
+.btn-icon:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+/* Form fields */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field label {
+  font: var(--text-footnote);
+  color: var(--color-text-secondary);
+  padding-left: var(--space-1);
+}
+
+.field input,
+.field select,
+.field textarea {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: var(--color-fill);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font: var(--text-body);
+  color: var(--color-text);
+  width: 100%;
+}
+
+.field textarea {
+  resize: vertical;
+  font-family: inherit;
+  min-height: 80px;
+}
+
+.field select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%233c3c43' opacity='0.5'%3e%3cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.form-error {
+  font: var(--text-footnote);
+  color: var(--color-danger);
+  padding-left: var(--space-1);
+}
+
+.shake {
+  animation: shake 0.36s var(--ease-standard);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+.divider {
+  height: 0.5px;
+  background: var(--color-separator);
+  border: none;
+}
+
+/* Star ratings */
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--color-star);
+  flex-shrink: 0;
+}
+
+.stars svg {
+  width: 14px;
+  height: 14px;
+}
+
+.stars.lg svg {
+  width: 18px;
+  height: 18px;
+}
+
+.star-input {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.star-input button {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: var(--color-fill-strong);
+  transition: color 0.15s var(--ease-standard), transform 0.15s var(--ease-standard);
+}
+
+.star-input button svg {
+  width: 34px;
+  height: 34px;
+}
+
+.star-input button.filled {
+  color: var(--color-star);
+}
+
+.star-input button:hover {
+  transform: scale(1.08);
+}
+
+.rating-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--text-footnote);
+  color: var(--color-text-secondary);
+}
+
+/* Status pills, shared by admin/shop transaction + review tables */
+.status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font: var(--text-caption);
+  font-weight: 600;
+}
+
+.status-pill.pending,
+.status-pill.inactive {
+  background: color-mix(in srgb, var(--color-warning) 16%, transparent);
+  color: var(--color-warning);
+}
+
+.status-pill.claimed,
+.status-pill.active {
+  background: color-mix(in srgb, var(--color-success) 16%, transparent);
+  color: var(--color-success);
+}
+
+/* Row lists, shared by shop detail / wallets / shop dashboard */
+.list-card {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  transition: background-color 0.15s var(--ease-standard);
+}
+
+.list-row:not(.skeleton-row):hover {
+  background: var(--color-fill);
+}
+
+.list-row + .list-row {
+  border-top: 0.5px solid var(--color-separator);
+}
+
+.list-row .icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color-success) 14%, transparent);
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.list-row .icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.list-row .main {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-row .main .title {
+  font: var(--text-headline);
+}
+
+.list-row .main .subtitle {
+  color: var(--color-text-secondary);
+  font: var(--text-footnote);
+  margin-top: 1px;
+}
+
+.list-row .value {
+  color: var(--color-success);
+  font: var(--text-headline);
+  white-space: nowrap;
+}
+
+.empty-state {
+  padding: var(--space-8) var(--space-5);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.empty-state svg {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto var(--space-3);
+  color: var(--color-text-tertiary);
+}
+
+/* Data table, shared by admin and shop dashboards */
+.table-card {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.table-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-card th {
+  text-align: left;
+  font: var(--text-footnote);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 0.5px solid var(--color-separator);
+  white-space: nowrap;
+}
+
+.table-card td {
+  padding: var(--space-3) var(--space-5);
+  font: var(--text-subhead);
+  border-bottom: 0.5px solid var(--color-separator);
+  white-space: nowrap;
+}
+
+.table-card tr:last-child td {
+  border-bottom: none;
+}
+
+.table-card tbody tr:not(.skeleton-row):hover {
+  background: var(--color-fill);
+}
+
+.table-card tbody tr {
+  transition: background-color 0.15s var(--ease-standard);
+}
+
+.table-empty {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+/* Entrance animations, reused by QR cards, table rows, review prompts */
+.pop-in {
+  animation: pop-in 0.4s var(--ease-standard);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.5s var(--ease-standard) both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll-triggered reveal (see utils/useScrollReveal.js) — element starts
+   hidden and transitions in the first time it enters the viewport, instead
+   of animating once at mount regardless of scroll position. */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s var(--ease-standard), transform 0.7s var(--ease-standard);
+  will-change: opacity, transform;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.6s var(--ease-standard), transform 0.6s var(--ease-standard);
+}
+
+.reveal-scale.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.table-row-in {
+  animation: table-row-in 0.35s var(--ease-standard) both;
+}
+
+@keyframes table-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-pill.claimed,
+.status-pill.active {
+  animation: pill-pop 0.3s var(--ease-standard);
+}
+
+@keyframes pill-pop {
+  0% { transform: scale(0.85); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Skeleton loaders */
+.skeleton-line,
+.skeleton-block {
+  border-radius: 6px;
+  background: linear-gradient(
+    100deg,
+    var(--color-fill) 30%,
+    var(--color-fill-strong) 50%,
+    var(--color-fill) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-line {
+  height: 13px;
+}
+
+.skeleton-block {
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color: currentColor;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Toasts */
+.toast-stack {
+  position: fixed;
+  top: max(var(--space-5), env(safe-area-inset-top, 0px));
+  right: var(--space-5);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: min(360px, calc(100vw - var(--space-5) * 2));
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-elevated);
+  border: 1px solid var(--color-separator);
+  animation: toast-in 0.32s var(--ease-standard);
+}
+
+.toast.leaving {
+  animation: toast-out 0.2s var(--ease-standard) forwards;
+}
+
+.toast-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-success .toast-icon {
+  background: color-mix(in srgb, var(--color-success) 18%, transparent);
+  color: var(--color-success);
+}
+
+.toast-error .toast-icon {
+  background: color-mix(in srgb, var(--color-danger) 18%, transparent);
+  color: var(--color-danger);
+}
+
+.toast-info .toast-icon {
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  color: var(--color-accent);
+}
+
+.toast-message {
+  flex: 1;
+  font: var(--text-subhead);
+  padding-top: 3px;
+  line-height: 1.4;
+}
+
+.toast-close {
+  border: none;
+  background: transparent;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.toast-close:hover {
+  background: var(--color-fill);
+  color: var(--color-text);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    max-height: 200px;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(24px) scale(0.96);
+  }
+}
+
+@media (max-width: 520px) {
+  .toast-stack {
+    top: auto;
+    bottom: max(var(--space-5), env(safe-area-inset-bottom, 0px));
+    right: var(--space-4);
+    left: var(--space-4);
+    width: auto;
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
