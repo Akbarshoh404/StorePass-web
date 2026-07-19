@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { api, ApiError } from "../api/client";
 import ThemeToggle from "../components/ThemeToggle";
 import { StarRating } from "../components/StarRating";
-import { LogoutIcon, PlusIcon, TrashIcon, StoreIcon, UsersIcon, ReceiptIcon, StarIcon } from "../components/Icons";
+import {
+  LogoutIcon,
+  PersonIcon,
+  PlusIcon,
+  TrashIcon,
+  StoreIcon,
+  UsersIcon,
+  ReceiptIcon,
+  StarIcon,
+} from "../components/Icons";
 import { formatMoney, formatDateTime } from "../utils/format";
 
 const TABS = [
@@ -59,6 +69,9 @@ export default function AdminDashboard() {
         <div className="nav-user">
           <span className="text-subhead text-secondary">{user.name}</span>
           <ThemeToggle />
+          <Link to="/profile" className="btn btn-icon" aria-label="Profile">
+            <PersonIcon />
+          </Link>
           <button className="btn btn-icon" onClick={logout} aria-label="Log out">
             <LogoutIcon />
           </button>
@@ -166,7 +179,13 @@ function ShopsTab({ shops, loading, onChanged }) {
           <form className="form-grid" onSubmit={handleCreate}>
             <div className="field">
               <label htmlFor="s-name">Shop name</label>
-              <input id="s-name" value={form.name} onChange={(e) => setField("name", e.target.value)} required />
+              <input
+                id="s-name"
+                placeholder="Nike Downtown"
+                value={form.name}
+                onChange={(e) => setField("name", e.target.value)}
+                required
+              />
             </div>
             <div className="field">
               <label htmlFor="s-category">Category</label>
@@ -182,6 +201,7 @@ function ShopsTab({ shops, loading, onChanged }) {
               <label htmlFor="s-contact">Login contact (email/phone)</label>
               <input
                 id="s-contact"
+                placeholder="shop@example.com"
                 value={form.contact}
                 onChange={(e) => setField("contact", e.target.value)}
                 required
@@ -192,6 +212,7 @@ function ShopsTab({ shops, loading, onChanged }) {
               <input
                 id="s-password"
                 type="text"
+                placeholder="Temporary password"
                 value={form.password}
                 onChange={(e) => setField("password", e.target.value)}
                 required
@@ -203,6 +224,7 @@ function ShopsTab({ shops, loading, onChanged }) {
                 id="s-rate"
                 type="text"
                 inputMode="decimal"
+                placeholder="1"
                 value={form.cashback_rate}
                 onChange={(e) => setField("cashback_rate", e.target.value)}
                 required
@@ -212,6 +234,7 @@ function ShopsTab({ shops, loading, onChanged }) {
               <label htmlFor="s-desc">Description</label>
               <input
                 id="s-desc"
+                placeholder="Optional — shown on the shop's public page"
                 value={form.description}
                 onChange={(e) => setField("description", e.target.value)}
               />

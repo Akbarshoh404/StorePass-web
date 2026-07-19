@@ -54,7 +54,7 @@
   pointer-events: none;
   background:
     radial-gradient(900px 560px at 12% 5%, var(--color-accent-soft), transparent 68%),
-    radial-gradient(600px 420px at 92% 25%, color-mix(in srgb, var(--color-star) 12%, transparent), transparent 70%);
+    radial-gradient(600px 420px at 92% 25%, var(--color-accent-secondary-soft), transparent 70%);
 }
 
 .hero::after {

@@ -7,11 +7,14 @@ import SplashScreen from "./components/SplashScreen";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import ShopDirectory from "./pages/customer/ShopDirectory";
 import ShopDetail from "./pages/customer/ShopDetail";
 import MyWallets from "./pages/customer/MyWallets";
 import ShopDashboard from "./pages/ShopDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import Profile from "./pages/Profile";
 import { roleHome } from "./utils/roles";
 
 function Root() {
@@ -30,6 +33,8 @@ export default function App() {
             <Route path="/" element={<Root />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route
               path="/shops"
               element={
@@ -67,6 +72,14 @@ export default function App() {
               element={
                 <ProtectedRoute role="admin">
                   <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />

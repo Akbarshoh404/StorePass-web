@@ -56,6 +56,25 @@
   gap: var(--space-4);
 }
 
+.auth-google-btn {
+  margin-bottom: var(--space-4);
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-tertiary);
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-separator);
+}
+
 .auth-switch {
   text-align: center;
   margin-top: var(--space-6);

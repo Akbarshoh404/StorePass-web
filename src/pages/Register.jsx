@@ -49,7 +49,14 @@ export default function Register() {
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="field">
             <label htmlFor="name">Name</label>
-            <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input
+              id="name"
+              type="text"
+              placeholder="Jane Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
           <div className="field">
             <label htmlFor="contact">Phone or email</label>
@@ -57,6 +64,7 @@ export default function Register() {
               id="contact"
               type="text"
               autoComplete="username"
+              placeholder="you@example.com or phone number"
               value={contact}
               onChange={(e) => setContact(e.target.value)}
               required
@@ -68,6 +76,7 @@ export default function Register() {
               id="password"
               type="password"
               autoComplete="new-password"
+              placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

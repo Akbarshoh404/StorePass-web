@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
-import { StoreIcon, WalletIcon, LogoutIcon } from "./Icons";
+import { StoreIcon, WalletIcon, PersonIcon, LogoutIcon } from "./Icons";
 
 export default function CustomerNav({ active }) {
   const { logout } = useAuth();
@@ -30,6 +30,9 @@ export default function CustomerNav({ active }) {
       </nav>
       <div className="nav-user">
         <ThemeToggle />
+        <Link to="/profile" className="btn btn-icon" aria-label="Profile">
+          <PersonIcon />
+        </Link>
         <button className="btn btn-icon" onClick={logout} aria-label="Log out">
           <LogoutIcon />
         </button>

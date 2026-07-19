@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { api, ApiError } from "../api/client";
 import ThemeToggle from "../components/ThemeToggle";
 import { StarRating } from "../components/StarRating";
-import { LogoutIcon, PlusIcon, EmptyBoxIcon } from "../components/Icons";
+import { LogoutIcon, PersonIcon, PlusIcon, EmptyBoxIcon } from "../components/Icons";
 import { formatMoney, formatTime, formatDateTime, parseAmount } from "../utils/format";
 
 export default function ShopDashboard() {
@@ -88,6 +89,9 @@ export default function ShopDashboard() {
         <div className="nav-user">
           <span className="text-subhead text-secondary">{user.name}</span>
           <ThemeToggle />
+          <Link to="/profile" className="btn btn-icon" aria-label="Profile">
+            <PersonIcon />
+          </Link>
           <button className="btn btn-icon" onClick={logout} aria-label="Log out">
             <LogoutIcon />
           </button>

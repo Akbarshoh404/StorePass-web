@@ -188,29 +188,37 @@ img {
 
 /* Form fields */
 .field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  position: relative;
+  padding-top: 8px;
 }
 
 .field label {
   font: var(--text-footnote);
   color: var(--color-text-secondary);
   padding-left: var(--space-1);
+  margin: 0 0 var(--space-2);
 }
 
 .field input,
 .field select,
 .field textarea {
   appearance: none;
-  border: none;
+  border: 1.5px solid transparent;
   outline: none;
   background: var(--color-fill);
   border-radius: var(--radius-md);
-  padding: 14px 16px;
+  padding: 20px var(--space-4) 8px;
   font: var(--text-body);
   color: var(--color-text);
   width: 100%;
+  transition: border-color 0.15s var(--ease-standard), box-shadow 0.15s var(--ease-standard),
+    background-color 0.15s var(--ease-standard);
+}
+
+.field input:hover:not(:focus),
+.field select:hover:not(:focus),
+.field textarea:hover:not(:focus) {
+  background: var(--color-fill-strong);
 }
 
 .field textarea {
@@ -229,7 +237,54 @@ img {
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  background: var(--color-bg-elevated);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+
+/* Floating labels — the label sits inside the input at rest and floats up
+   into a caption position on focus or once the field has a value. Fields
+   with no input/select/textarea (e.g. the star-rating field) are unaffected
+   and keep their normal static label above the content. */
+.field:has(input) label,
+.field:has(select) label,
+.field:has(textarea) label {
+  position: absolute;
+  left: var(--space-4);
+  top: 26px;
+  font: var(--text-body);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+  transition: transform 0.15s var(--ease-standard), color 0.15s var(--ease-standard);
+  transform-origin: left top;
+}
+
+.field:has(input:focus) label,
+.field:has(input:not(:placeholder-shown)) label,
+.field:has(select) label,
+.field:has(textarea:focus) label,
+.field:has(textarea:not(:placeholder-shown)) label {
+  transform: translateY(-14px) scale(0.78);
+  color: var(--color-text-secondary);
+}
+
+/* The label sits where the placeholder would be at rest, so the native
+   placeholder must stay invisible until the label has floated out of the
+   way (on focus) — otherwise both render on top of each other. */
+.field input::placeholder,
+.field textarea::placeholder {
+  color: transparent;
+  transition: color 0.15s var(--ease-standard);
+}
+
+.field input:focus::placeholder,
+.field textarea:focus::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.field:has(input:focus) label,
+.field:has(textarea:focus) label {
+  color: var(--color-accent);
 }
 
 .form-error {

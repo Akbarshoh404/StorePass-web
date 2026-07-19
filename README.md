@@ -9,6 +9,7 @@ Talks to the [backend](../backend) JSON API over cookie-based sessions
 - **React 19** + **Vite**
 - **react-router-dom** for routing
 - **html5-qrcode** for in-browser camera QR scanning
+- **Firebase Auth** for "Sign in with Google" (`src/firebase.js`)
 - Plain CSS with custom properties — no UI framework
 
 ## Setup
@@ -42,16 +43,37 @@ npm run preview   # serve the production build locally
 
 ## Pages
 
-| Route         | Who          | What                                                                     |
-| -------------- | ------------- | --------------------------------------------------------------------------- |
-| `/`            | logged out    | Marketing landing page — hero, how-it-works, features, CTA.               |
-| `/login`       | anyone        | Sign in — checks admin/customer/shop accounts uniformly.                  |
-| `/register`    | anyone        | Create a **customer** account (shops are added by the admin, not self-registered). |
-| `/shops`       | customer      | Directory of active shops — search, category, rating, your wallet balance per shop. |
-| `/shops/:id`   | customer      | Shop detail — scan to earn, your wallet + visit history there, all reviews. |
-| `/wallets`     | customer      | All of your non-zero wallets across shops, at a glance.                    |
-| `/shop`        | shop          | Generate a purchase QR, see your transactions, see your reviews + average rating. |
-| `/admin`       | admin         | Shops (add/edit/deactivate + stats), Customers, Transactions, Reviews (moderate). |
+| Route              | Who          | What                                                                     |
+| ------------------- | ------------- | --------------------------------------------------------------------------- |
+| `/`                 | logged out    | Marketing landing page — hero, how-it-works, features, CTA.               |
+| `/login`            | anyone        | Sign in — checks admin/customer/shop accounts uniformly, plus "Continue with Google". |
+| `/register`         | anyone        | Create a **customer** account (shops are added by the admin, not self-registered). |
+| `/forgot-password`  | anyone        | Request a reset code (printed to the backend console — no email provider is set up). |
+| `/reset-password`   | anyone        | Enter the code + set a new password.                                      |
+| `/profile`          | any signed-in | Edit display name/password, sign out — same for all three roles.          |
+| `/shops`            | customer      | Directory of active shops — search, category, rating, your wallet balance per shop. |
+| `/shops/:id`        | customer      | Shop detail — scan to earn, your wallet + visit history there, all reviews. |
+| `/wallets`          | customer      | All of your non-zero wallets across shops, at a glance.                    |
+| `/shop`             | shop          | Generate a purchase QR, see your transactions, see your reviews + average rating. |
+| `/admin`            | admin         | Shops (add/edit/deactivate + stats), Customers, Transactions, Reviews (moderate). |
+
+### Sign in with Google
+
+`src/firebase.js` initializes Firebase with the `storepass-e4a43` project's
+web config and exports `auth` + a `GoogleAuthProvider`. `Login.jsx` calls
+`signInWithPopup(auth, googleProvider)`, takes the resulting
+`result.user.getIdToken()`, and POSTs it to `api.loginWithGoogle` —
+the backend verifies it and logs in the same way password login does. One
+button covers both sign-in and sign-up (the backend creates the account on
+first use).
+
+**Google must be enabled as a sign-in provider** in the Firebase console
+(Authentication → Sign-in method → Google) before this works — a fresh
+Firebase project has no providers enabled by default. If it's not, the
+button fails with `auth/operation-not-allowed`, which now surfaces as a
+specific, actionable error message instead of a generic one. Also check
+Authentication → Settings → Authorized domains if you're testing from
+somewhere other than `localhost`.
 
 `/` shows the landing page when logged out, otherwise redirects to the right
 place for the session's role (`utils/roles.js#roleHome`). `ProtectedRoute`
@@ -110,22 +132,25 @@ notifications, top-right on desktop and bottom on phone widths.
 
 ```
 frontend/src/
+  firebase.js                    Firebase app init + GoogleAuthProvider (Google sign-in)
   api/client.js                 fetch wrapper + full endpoint surface, incl. api.admin.*
   context/
-    AuthContext.jsx               current identity, login/register/logout/refresh/revalidate
+    AuthContext.jsx               current identity, login/register/loginWithGoogle/updateProfile/logout
     ThemeContext.jsx               light/dark theme, persisted to localStorage
     ToastContext.jsx               stacked, animated notifications
   components/
-    ProtectedRoute.jsx            role-gated route wrapper
+    ProtectedRoute.jsx            role-gated route wrapper (role prop optional — any signed-in user)
     CustomerNav.jsx                 shared nav for the three customer pages
     ScanSheet.jsx                   camera scan + manual entry + claim + required review step
     StarRating.jsx                  StarRating (display) and StarInput (tap-to-rate)
     ThemeToggle.jsx                 sun/moon theme switch
     SplashScreen.jsx                 branded loading state (no blank flash)
-    Icons.jsx                      inline SVG icon set
+    Icons.jsx                      inline SVG icon set, incl. GoogleIcon
   pages/
     Landing.jsx                     marketing landing page
-    Login.jsx / Register.jsx       auth screens
+    Login.jsx / Register.jsx       auth screens (Login has the Google button)
+    ForgotPassword.jsx / ResetPassword.jsx   password reset flow
+    Profile.jsx                     /profile — name/password editing, any role
     customer/
       ShopDirectory.jsx              /shops — search + shop cards
       ShopDetail.jsx                 /shops/:id — scan, wallet, visits, reviews

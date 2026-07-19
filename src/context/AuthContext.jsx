@@ -47,6 +47,18 @@ export function AuthProvider({ children }) {
     return newUser;
   }, []);
 
+  const loginWithGoogle = useCallback(async (idToken) => {
+    const loggedInUser = await api.loginWithGoogle(idToken);
+    setUser(loggedInUser);
+    return loggedInUser;
+  }, []);
+
+  const updateProfile = useCallback(async (payload) => {
+    const updated = await api.updateMe(payload);
+    setUser(updated);
+    return updated;
+  }, []);
+
   const logout = useCallback(async () => {
     await api.logout().catch(() => {});
     setUser(null);
@@ -73,7 +85,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, refresh, revalidate }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, loginWithGoogle, updateProfile, logout, refresh, revalidate }}
+    >
       {children}
     </AuthContext.Provider>
   );

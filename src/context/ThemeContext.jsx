@@ -14,7 +14,7 @@ export function ThemeProvider({ children }) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem(STORAGE_KEY, theme);
     const meta = document.getElementById("theme-color-meta");
-    if (meta) meta.setAttribute("content", theme === "dark" ? "#0b0b10" : "#fafafa");
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#0B1120" : "#F8FAFC");
   }, [theme]);
 
   const toggleTheme = useCallback(() => {
