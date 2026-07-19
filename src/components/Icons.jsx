@@ -5,6 +5,13 @@ const common = {
   strokeLinecap: "round",
   strokeLinejoin: "round",
   viewBox: "0 0 24 24",
+  // Explicit intrinsic size — without this, an <svg> with no width/height
+  // has no natural size (unlike <img>) and collapses to 0×0 inside any
+  // flexbox parent (every .btn is inline-flex), instead of rendering
+  // invisibly-oversized like it would in normal block flow. Any call site
+  // can still override via props, since props spread after this.
+  width: 20,
+  height: 20,
 };
 
 export function StarIcon({ filled, ...props }) {
