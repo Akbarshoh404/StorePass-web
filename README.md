@@ -19,11 +19,14 @@ cd frontend
 npm install
 ```
 
-Copy `.env.example` to `.env` if the backend isn't running at the default URL:
+`frontend/.env` (gitignored, no `.env.example` template — single-owner
+project) points at the backend:
 
 ```
 VITE_API_URL=http://localhost:8000
 ```
+
+Change it to the deployed Vercel URL once the backend is live there.
 
 ## Run
 
