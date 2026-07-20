@@ -5,7 +5,7 @@ import { useToast } from "../context/ToastContext";
 import { api, ApiError } from "../api/client";
 import ThemeToggle from "../components/ThemeToggle";
 import { StarRating } from "../components/StarRating";
-import { LogoutIcon, PersonIcon, PlusIcon, EmptyBoxIcon } from "../components/Icons";
+import { LogoutIcon, PersonIcon, PlusIcon, EmptyBoxIcon, CheckIcon } from "../components/Icons";
 import { formatMoney, formatTime, formatDateTime, parseAmount } from "../utils/format";
 
 export default function ShopDashboard() {
@@ -19,12 +19,31 @@ export default function ShopDashboard() {
   const [txnLoading, setTxnLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [celebrateTxn, setCelebrateTxn] = useState(null);
   const pollRef = useRef(null);
+  // loadTransactions runs on a setInterval set up once (empty-dep effect
+  // below), so it can't rely on the `lastTxn` state closure staying fresh —
+  // a ref mirrors it instead.
+  const lastTxnRef = useRef(null);
+
+  function trackLastTxn(txn) {
+    lastTxnRef.current = txn;
+    setLastTxn(txn);
+  }
 
   async function loadTransactions() {
     try {
       const data = await api.shopTransactions();
       setTransactions(data);
+      const tracked = lastTxnRef.current;
+      if (tracked && tracked.status === "pending") {
+        const updated = data.find((t) => t.id === tracked.id);
+        if (updated && updated.status === "claimed") {
+          lastTxnRef.current = updated;
+          setLastTxn(updated);
+          setCelebrateTxn(updated);
+        }
+      }
     } catch (err) {
       // polled every 5s — logged, not toasted, so a down backend doesn't spam toasts
       console.error("Could not load transactions:", err);
@@ -63,7 +82,7 @@ export default function ShopDashboard() {
     setSubmitting(true);
     try {
       const txn = await api.createTransaction(value);
-      setLastTxn(txn);
+      trackLastTxn(txn);
       setAmount("");
       toast.success(`QR ready for ${formatMoney(txn.amount)}`);
       loadTransactions();
@@ -230,6 +249,26 @@ export default function ShopDashboard() {
           </div>
         )}
       </div>
+
+      {celebrateTxn && (
+        <div className="scan-sheet-backdrop" onClick={() => setCelebrateTxn(null)}>
+          <div className="scan-sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="result-burst">
+              <div className="check">
+                <CheckIcon />
+              </div>
+              <p className="text-title2">Cashback claimed!</p>
+              <p className="text-subhead text-secondary">
+                {formatMoney(celebrateTxn.amount)} purchase &middot; +{formatMoney(celebrateTxn.cashback_amount)}{" "}
+                cashback
+              </p>
+              <button className="btn btn-primary" style={{ marginTop: 24 }} onClick={() => setCelebrateTxn(null)}>
+                Nice
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
