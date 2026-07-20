@@ -206,11 +206,12 @@ img {
   border: 1.5px solid transparent;
   outline: none;
   background: var(--color-fill);
-  border-radius: var(--radius-md);
-  padding: 20px var(--space-4) 8px;
+  border-radius: var(--radius-lg);
+  padding: 27px var(--space-5) 13px;
   font: var(--text-body);
   color: var(--color-text);
   width: 100%;
+  min-height: 60px;
   transition: border-color 0.15s var(--ease-standard), box-shadow 0.15s var(--ease-standard),
     background-color 0.15s var(--ease-standard);
 }
@@ -224,7 +225,7 @@ img {
 .field textarea {
   resize: vertical;
   font-family: inherit;
-  min-height: 80px;
+  min-height: 96px;
 }
 
 .field select {
@@ -250,8 +251,8 @@ img {
 .field:has(select) label,
 .field:has(textarea) label {
   position: absolute;
-  left: var(--space-4);
-  top: 26px;
+  left: var(--space-5);
+  top: 32px;
   font: var(--text-body);
   color: var(--color-text-tertiary);
   pointer-events: none;
@@ -264,7 +265,7 @@ img {
 .field:has(select) label,
 .field:has(textarea:focus) label,
 .field:has(textarea:not(:placeholder-shown)) label {
-  transform: translateY(-14px) scale(0.78);
+  transform: translateY(-16px) scale(0.78);
   color: var(--color-text-secondary);
 }
 
@@ -448,7 +449,7 @@ img {
 
 /* Profile page: dark hero header + grouped settings rows */
 .profile-hero {
-  background: #16161c;
+  background: #1c1c1e;
   padding: calc(var(--space-6) + env(safe-area-inset-top, 0px)) var(--space-5) var(--space-8);
   text-align: center;
   border-radius: 0 0 var(--radius-xl) var(--radius-xl);
