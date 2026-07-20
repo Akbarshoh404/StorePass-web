@@ -102,6 +102,9 @@ function ShopsTab({ shops, loading, onChanged }) {
     password: "",
     description: "",
     logo_url: "",
+    address: "",
+    phone: "",
+    hours: "",
     cashback_rate: "1",
   });
   const [submitting, setSubmitting] = useState(false);
@@ -123,7 +126,18 @@ function ShopsTab({ shops, loading, onChanged }) {
     try {
       await api.admin.createShop({ ...form, cashback_rate: rate });
       toast.success(`${form.name} added`);
-      setForm({ name: "", category: "", contact: "", password: "", description: "", logo_url: "", cashback_rate: "1" });
+      setForm({
+        name: "",
+        category: "",
+        contact: "",
+        password: "",
+        description: "",
+        logo_url: "",
+        address: "",
+        phone: "",
+        hours: "",
+        cashback_rate: "1",
+      });
       setShowForm(false);
       onChanged();
     } catch (err) {
@@ -248,6 +262,34 @@ function ShopsTab({ shops, loading, onChanged }) {
                 placeholder="Optional — https://…"
                 value={form.logo_url}
                 onChange={(e) => setField("logo_url", e.target.value)}
+              />
+            </div>
+            <div className="field span-2">
+              <label htmlFor="s-address">Address</label>
+              <input
+                id="s-address"
+                placeholder="Optional"
+                value={form.address}
+                onChange={(e) => setField("address", e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="s-phone">Phone</label>
+              <input
+                id="s-phone"
+                type="tel"
+                placeholder="Optional"
+                value={form.phone}
+                onChange={(e) => setField("phone", e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="s-hours">Hours</label>
+              <input
+                id="s-hours"
+                placeholder="Optional — e.g. Mon–Fri 9–6"
+                value={form.hours}
+                onChange={(e) => setField("hours", e.target.value)}
               />
             </div>
             {error && (

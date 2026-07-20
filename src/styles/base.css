@@ -446,6 +446,118 @@ img {
   white-space: nowrap;
 }
 
+/* Profile page: dark hero header + grouped settings rows */
+.profile-hero {
+  background: #16161c;
+  padding: calc(var(--space-6) + env(safe-area-inset-top, 0px)) var(--space-5) var(--space-8);
+  text-align: center;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+
+.profile-hero-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.profile-hero-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.profile-avatar {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto var(--space-3);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 30px/1 var(--font-family);
+}
+
+.profile-name {
+  color: #fff;
+  font: var(--text-title2);
+}
+
+.profile-contact {
+  color: rgba(255, 255, 255, 0.65);
+  font: var(--text-subhead);
+  margin-top: 2px;
+}
+
+.profile-role-pill {
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font: var(--text-caption);
+  font-weight: 600;
+}
+
+.settings-group-title {
+  font: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin: var(--space-6) 0 var(--space-2) var(--space-1);
+}
+
+.settings-row {
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.settings-row .icon {
+  background: var(--color-fill);
+  color: var(--color-text-secondary);
+}
+
+.settings-row.danger .title {
+  color: var(--color-danger);
+}
+
+.settings-row .icon.danger {
+  background: color-mix(in srgb, var(--color-danger) 14%, transparent);
+  color: var(--color-danger);
+}
+
+.settings-row > svg:last-child {
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.danger-badge {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-danger) 14%, transparent);
+  color: var(--color-danger);
+  font: var(--text-caption);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .empty-state {
   padding: var(--space-8) var(--space-5);
   text-align: center;

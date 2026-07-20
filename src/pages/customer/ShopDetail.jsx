@@ -6,7 +6,7 @@ import CustomerNav from "../../components/CustomerNav";
 import ScanSheet from "../../components/ScanSheet";
 import ShopLogo from "../../components/ShopLogo";
 import { StarRating } from "../../components/StarRating";
-import { ScanIcon, WalletIcon, TagIcon, EmptyBoxIcon } from "../../components/Icons";
+import { ScanIcon, WalletIcon, TagIcon, EmptyBoxIcon, PinIcon, PhoneIcon, ClockIcon } from "../../components/Icons";
 import { formatMoney, formatDateTime } from "../../utils/format";
 
 export default function ShopDetail() {
@@ -81,6 +81,29 @@ export default function ShopDetail() {
                 </span>
               </div>
               <p className="shop-desc">{shop.description || "No description yet."}</p>
+
+              {(shop.address || shop.phone || shop.hours) && (
+                <div className="shop-info-card">
+                  {shop.address && (
+                    <div className="shop-info-row">
+                      <PinIcon width={18} height={18} />
+                      <span>{shop.address}</span>
+                    </div>
+                  )}
+                  {shop.phone && (
+                    <div className="shop-info-row">
+                      <PhoneIcon width={18} height={18} />
+                      <span>{shop.phone}</span>
+                    </div>
+                  )}
+                  {shop.hours && (
+                    <div className="shop-info-row">
+                      <ClockIcon width={18} height={18} />
+                      <span>{shop.hours}</span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="shop-hero-actions">
                 <div className="wallet-mini">

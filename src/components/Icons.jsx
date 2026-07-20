@@ -323,3 +323,29 @@ export function StoreIcon(props) {
     </svg>
   );
 }
+
+export function PinIcon(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z" />
+      <circle cx="12" cy="9.5" r="2.5" />
+    </svg>
+  );
+}
+
+export function PhoneIcon(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M6.5 3h3l1.5 4.5-2.5 1.5a12 12 0 0 0 6.5 6.5l1.5-2.5L21 14.5v3a2 2 0 0 1-2.1 2c-6.6-.5-12-5.9-12.5-12.5A2 2 0 0 1 6.5 3Z" />
+    </svg>
+  );
+}
+
+export function ClockIcon(props) {
+  return (
+    <svg {...common} {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </svg>
+  );
+}

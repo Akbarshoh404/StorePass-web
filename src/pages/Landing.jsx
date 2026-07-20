@@ -14,6 +14,8 @@ import {
   TagIcon,
 } from "../components/Icons";
 
+const MOBILE_APP_URL = "https://github.com/Akbarshoh404/StorePass-mobile/releases";
+
 const STEPS = [
   {
     icon: StoreIcon,
@@ -171,6 +173,7 @@ export default function Landing() {
           </div>
         </section>
 
+        <DownloadBand />
         <CtaBand />
       </main>
 
@@ -215,6 +218,32 @@ function FeatureCard({ feature: f, index }) {
       <h3>{f.title}</h3>
       <p>{f.body}</p>
     </div>
+  );
+}
+
+function DownloadBand() {
+  const ref = useScrollReveal();
+  return (
+    <section className="download-band reveal-scale" ref={ref}>
+      <div className="download-copy">
+        <span className="eyebrow eyebrow-light">
+          <ScanIcon width={15} height={15} /> On your phone
+        </span>
+        <h2>Download the StorePass app</h2>
+        <p>
+          Scan QR codes and check your wallets on the go — the mobile app has
+          everything this site does, built for Android.
+        </p>
+        <a
+          href={MOBILE_APP_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="btn btn-fill"
+        >
+          Get the app <ArrowRightIcon width={18} height={18} />
+        </a>
+      </div>
+    </section>
   );
 }
 

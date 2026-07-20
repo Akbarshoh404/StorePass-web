@@ -449,6 +449,47 @@
 }
 
 /* ---- CTA band ---- */
+.download-band {
+  max-width: 920px;
+  margin: clamp(72px, 10vw, 120px) auto 0;
+  text-align: center;
+  padding: clamp(56px, 8vw, 80px) var(--space-8);
+  border-radius: var(--radius-xl);
+  background: #16161c;
+  color: #fff;
+}
+
+.download-band .eyebrow-light {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.download-band h2 {
+  font: 800 clamp(28px, 4vw, 42px)/1.2 var(--font-family);
+  letter-spacing: -0.02em;
+}
+
+.download-band p {
+  margin: var(--space-4) auto 0;
+  max-width: 46ch;
+  color: rgba(255, 255, 255, 0.72);
+  font: 400 clamp(16px, 1.6vw, 19px)/1.5 var(--font-family);
+}
+
+.download-band .btn {
+  margin-top: var(--space-7, 28px);
+  background: #fff;
+  color: #16161c;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.download-band .btn:hover {
+  background: #fff;
+  color: #16161c;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
+}
+
 .cta-band {
   position: relative;
   max-width: 920px;
