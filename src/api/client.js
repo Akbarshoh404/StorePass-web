@@ -1,4 +1,10 @@
-export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// Trailing slash stripped defensively — a request URL is built as
+// `${API_URL}${path}` where path already starts with "/", so a trailing
+// slash on the env var produces "https://host//auth/login". Vercel's edge
+// normalizes that double slash with a 308 redirect that never reaches this
+// app (so it has no CORS headers), which the browser then blocks — looks
+// exactly like "API unreachable" for what's really just a URL formatting slip.
+export const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/+$/, "");
 
 export class ApiError extends Error {
   constructor(message, status) {
