@@ -130,6 +130,23 @@ export function PlusIcon(props) {
   );
 }
 
+export function MinusIcon(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M5 12h14" />
+    </svg>
+  );
+}
+
+export function ReplyIcon(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M9 8 4 12l5 4" />
+      <path d="M4 12h9a6 6 0 0 1 6 6v1" />
+    </svg>
+  );
+}
+
 export function WalletIcon(props) {
   return (
     <svg {...common} {...props}>

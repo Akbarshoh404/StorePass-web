@@ -92,7 +92,11 @@ export default function ScanSheet({ onClose, onClaimed }) {
     try {
       const res = await api.claimTransaction(token);
       setResult(res);
-      toast.success(`You earned ${formatMoney(res.cashback_amount)} at ${res.shop_name}!`);
+      if (res.kind === "redeem") {
+        toast.success(`You redeemed ${formatMoney(res.amount)} at ${res.shop_name}`);
+      } else {
+        toast.success(`You earned ${formatMoney(res.cashback_amount)} at ${res.shop_name}!`);
+      }
       await onClaimed();
     } catch (err) {
       claimedRef.current = false;
@@ -179,8 +183,15 @@ export default function ScanSheet({ onClose, onClaimed }) {
               <div className="check">
                 <CheckIcon />
               </div>
-              <p className="text-title2">+{formatMoney(result.cashback_amount)}</p>
+              {result.kind === "redeem" ? (
+                <p className="text-title2">-{formatMoney(result.amount)}</p>
+              ) : (
+                <p className="text-title2">+{formatMoney(result.cashback_amount)}</p>
+              )}
               <p className="text-subhead text-secondary">at {result.shop_name}</p>
+              <p className="text-footnote text-secondary" style={{ marginTop: 4 }}>
+                New balance: {formatMoney(result.wallet_balance)}
+              </p>
             </div>
 
             <form className="stack" onSubmit={handleReviewSubmit}>

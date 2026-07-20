@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
-import { StoreIcon, WalletIcon, PersonIcon, LogoutIcon } from "./Icons";
+import { StoreIcon, WalletIcon, PersonIcon, LogoutIcon, HistoryIcon } from "./Icons";
 
 export default function CustomerNav({ active }) {
   const { logout } = useAuth();
@@ -26,6 +26,13 @@ export default function CustomerNav({ active }) {
           aria-current={active === "wallets" ? "page" : undefined}
         >
           <WalletIcon /> My wallets
+        </Link>
+        <Link
+          to="/activity"
+          className={active === "activity" ? "active" : ""}
+          aria-current={active === "activity" ? "page" : undefined}
+        >
+          <HistoryIcon /> Activity
         </Link>
       </nav>
       <div className="nav-user">

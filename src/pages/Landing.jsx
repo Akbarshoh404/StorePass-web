@@ -12,6 +12,7 @@ import {
   ArrowRightIcon,
   GiftIcon,
   TagIcon,
+  DownloadIcon,
 } from "../components/Icons";
 
 const MOBILE_APP_URL = "https://github.com/Akbarshoh404/StorePass-mobile/releases";
@@ -225,23 +226,38 @@ function DownloadBand() {
   const ref = useScrollReveal();
   return (
     <section className="download-band reveal-scale" ref={ref}>
-      <div className="download-copy">
-        <span className="eyebrow eyebrow-light">
-          <ScanIcon width={15} height={15} /> On your phone
-        </span>
-        <h2>Download the StorePass app</h2>
-        <p>
-          Scan QR codes and check your wallets on the go — the mobile app has
-          everything this site does, built for Android.
-        </p>
-        <a
-          href={MOBILE_APP_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-fill"
-        >
-          Get the app <ArrowRightIcon width={18} height={18} />
-        </a>
+      <div className="download-band-inner">
+        <div className="download-copy">
+          <span className="eyebrow eyebrow-light">
+            <ScanIcon width={15} height={15} /> Free · Android
+          </span>
+          <h2>
+            Get StorePass
+            <br />
+            on your phone.
+          </h2>
+          <p>
+            Scan QR codes at checkout, watch cashback land instantly, and
+            check every shop's wallet on the go — the full StorePass
+            experience, built for Android.
+          </p>
+          <a href={MOBILE_APP_URL} target="_blank" rel="noreferrer" className="btn download-band-cta">
+            <DownloadIcon width={20} height={20} /> Download the app
+          </a>
+        </div>
+        <div className="download-visual" aria-hidden="true">
+          <div className="download-phone">
+            <div className="download-phone-notch" />
+            <div className="download-phone-screen">
+              <span className="download-phone-mark">S</span>
+              <div className="download-phone-line" style={{ width: "70%" }} />
+              <div className="download-phone-line" style={{ width: "45%" }} />
+              <div className="download-phone-card" />
+            </div>
+          </div>
+          <div className="download-orb download-orb-1" />
+          <div className="download-orb download-orb-2" />
+        </div>
       </div>
     </section>
   );

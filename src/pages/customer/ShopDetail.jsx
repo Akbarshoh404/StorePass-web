@@ -158,10 +158,14 @@ function VisitList({ items }) {
             <TagIcon />
           </span>
           <div className="main">
-            <div className="title">{formatMoney(t.amount)} purchase</div>
+            <div className="title">
+              {t.kind === "redeem" ? "Redeemed" : `${formatMoney(t.amount)} purchase`}
+            </div>
             <div className="subtitle">{formatDateTime(t.claimed_at)}</div>
           </div>
-          <div className="value">+{formatMoney(t.cashback_amount)}</div>
+          <div className="value" style={{ color: t.kind === "redeem" ? "var(--color-danger)" : undefined }}>
+            {t.kind === "redeem" ? `-${formatMoney(t.amount)}` : `+${formatMoney(t.cashback_amount)}`}
+          </div>
         </div>
       ))}
     </div>
@@ -189,6 +193,12 @@ function ReviewList({ items }) {
           </div>
           <StarRating value={r.rating} />
           {r.comment && <p className="review-comment">{r.comment}</p>}
+          {r.shop_reply && (
+            <div className="shop-reply">
+              <span className="shop-reply-label">Shop reply</span>
+              <p>{r.shop_reply}</p>
+            </div>
+          )}
         </div>
       ))}
     </div>

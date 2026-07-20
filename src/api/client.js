@@ -77,18 +77,27 @@ export const api = {
   shopDetail: (id) => request(`/shops/${id}`),
   shopReviews: (id) => request(`/shops/${id}/reviews`),
 
+  // Shop self-service
+  updateMyShop: (payload) => request("/shops/me", { method: "PATCH", body: payload }),
+
   // Transactions
   createTransaction: (amount) => request("/transactions/create", { method: "POST", body: { amount } }),
+  createRedemption: (amount) => request("/transactions/redeem", { method: "POST", body: { amount } }),
   claimTransaction: (qrToken) => request("/transactions/claim", { method: "POST", body: { qr_token: qrToken } }),
+  voidTransaction: (id) => request(`/transactions/${id}/void`, { method: "POST" }),
   myTransactions: () => request("/transactions/mine"),
   shopTransactions: () => request("/transactions/shop-mine"),
+  shopAnalytics: () => request("/transactions/shop-mine/analytics"),
   qrImageUrl: (token) => `${API_URL}/transactions/qr/${token}`,
+  exportShopTransactionsUrl: () => `${API_URL}/transactions/shop-mine/export`,
 
   // Reviews
   createReview: (payload) => request("/reviews", { method: "POST", body: payload }),
+  replyToReview: (id, reply) => request(`/reviews/${id}/reply`, { method: "POST", body: { reply } }),
 
   // Wallets
   myWallets: () => request("/wallets/mine"),
+  walletEntries: (shopId) => request(`/wallets/${shopId}/entries`),
 
   // Admin
   admin: {
@@ -96,7 +105,12 @@ export const api = {
     updateShop: (id, payload) => request(`/admin/shops/${id}`, { method: "PATCH", body: payload }),
     listShops: () => request("/admin/shops"),
     listCustomers: () => request("/admin/customers"),
+    suspendCustomer: (id) => request(`/admin/customers/${id}/suspend`, { method: "POST" }),
+    reactivateCustomer: (id) => request(`/admin/customers/${id}/reactivate`, { method: "POST" }),
+    adjustWallet: (payload) => request("/admin/wallets/adjust", { method: "POST", body: payload }),
+    voidTransaction: (id) => request(`/admin/transactions/${id}/void`, { method: "POST" }),
     listTransactions: (shopId) => request(withShopFilter("/admin/transactions", shopId)),
+    exportTransactionsUrl: (shopId) => `${API_URL}${withShopFilter("/admin/transactions/export", shopId)}`,
     listReviews: (shopId) => request(withShopFilter("/admin/reviews", shopId)),
     deleteReview: (id) => request(`/admin/reviews/${id}`, { method: "DELETE" }),
   },

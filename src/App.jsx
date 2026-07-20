@@ -12,6 +12,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ShopDirectory from "./pages/customer/ShopDirectory";
 import ShopDetail from "./pages/customer/ShopDetail";
 import MyWallets from "./pages/customer/MyWallets";
+import Activity from "./pages/customer/Activity";
 import ShopDashboard from "./pages/ShopDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import Profile from "./pages/Profile";
@@ -56,6 +57,14 @@ export default function App() {
               element={
                 <ProtectedRoute role="customer">
                   <MyWallets />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/activity"
+              element={
+                <ProtectedRoute role="customer">
+                  <Activity />
                 </ProtectedRoute>
               }
             />
