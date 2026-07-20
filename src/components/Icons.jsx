@@ -324,6 +324,16 @@ export function StoreIcon(props) {
   );
 }
 
+export function DownloadIcon(props) {
+  return (
+    <svg {...common} {...props}>
+      <path d="M12 3.5v11" />
+      <path d="M7.5 10.5 12 15l4.5-4.5" />
+      <path d="M5 18.5h14" />
+    </svg>
+  );
+}
+
 export function PinIcon(props) {
   return (
     <svg {...common} {...props}>

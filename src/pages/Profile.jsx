@@ -4,8 +4,19 @@ import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { useTheme } from "../context/ThemeContext";
 import { ApiError } from "../api/client";
-import { EditIcon, ShieldIcon, LogoutIcon, XIcon, SunIcon, MoonIcon, ChevronRightIcon } from "../components/Icons";
+import {
+  EditIcon,
+  ShieldIcon,
+  LogoutIcon,
+  XIcon,
+  SunIcon,
+  MoonIcon,
+  ChevronRightIcon,
+  DownloadIcon,
+} from "../components/Icons";
 import { roleHome } from "../utils/roles";
+
+const MOBILE_APP_URL = "https://github.com/Akbarshoh404/StorePass-mobile/releases";
 
 export default function Profile() {
   const { user, logout } = useAuth();
@@ -76,6 +87,20 @@ export default function Profile() {
               aria-label="Toggle dark mode"
             />
           </div>
+        </div>
+
+        <p className="settings-group-title">App</p>
+        <div className="list-card" style={{ marginBottom: 32 }}>
+          <a className="list-row settings-row" href={MOBILE_APP_URL} target="_blank" rel="noreferrer">
+            <span className="icon">
+              <DownloadIcon />
+            </span>
+            <div className="main">
+              <div className="title">Get the mobile app</div>
+              <div className="subtitle">Scan and check wallets on the go</div>
+            </div>
+            <ChevronRightIcon width={18} height={18} />
+          </a>
         </div>
 
         <div className="list-card" style={{ marginBottom: 32 }}>

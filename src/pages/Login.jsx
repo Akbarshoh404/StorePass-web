@@ -132,16 +132,6 @@ export default function Login() {
           <Link to="/forgot-password">Forgot password?</Link>
         </p>
 
-        <p className="text-footnote text-secondary auth-demo-hint">
-          <strong>Demo accounts</strong>
-          <br />
-          Admin — admin@storepass.demo / admin123
-          <br />
-          Shop — shop1@storepass.demo / shop123
-          <br />
-          Customer — customer@storepass.demo / customer123
-        </p>
-
         <p className="text-subhead auth-switch">
           New to StorePass? <Link to="/register">Sign up</Link> — or use Google above, it works for
           both.
