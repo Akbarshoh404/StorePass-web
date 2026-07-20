@@ -98,6 +98,7 @@ export default function AdminDashboard() {
 function ShopsTab({ shops, loading, onChanged }) {
   const toast = useToast();
   const [showForm, setShowForm] = useState(false);
+  const [editingShop, setEditingShop] = useState(null);
   const [form, setForm] = useState({
     name: "",
     category: "",
@@ -318,13 +319,14 @@ function ShopsTab({ shops, loading, onChanged }) {
               <th>Cashback issued</th>
               <th>Rating</th>
               <th>Status</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {loading
               ? [0, 1].map((i) => (
                   <tr key={i} className="skeleton-row">
-                    <td colSpan={7}>
+                    <td colSpan={8}>
                       <div className="skeleton-line" style={{ width: "100%" }} />
                     </td>
                   </tr>
@@ -352,6 +354,15 @@ function ShopsTab({ shops, loading, onChanged }) {
                         />
                       </div>
                     </td>
+                    <td>
+                      <button
+                        className="btn btn-icon"
+                        onClick={() => setEditingShop(s)}
+                        aria-label={`Edit ${s.name}`}
+                      >
+                        <EditIcon width={16} height={16} />
+                      </button>
+                    </td>
                   </tr>
                 ))}
           </tbody>
@@ -360,7 +371,126 @@ function ShopsTab({ shops, loading, onChanged }) {
           <div className="table-empty text-subhead">No shops yet — add the first one above</div>
         )}
       </div>
+
+      {editingShop && (
+        <EditShopModal shop={editingShop} onClose={() => setEditingShop(null)} onSaved={onChanged} />
+      )}
     </>
+  );
+}
+
+function EditShopModal({ shop, onClose, onSaved }) {
+  const toast = useToast();
+  const [form, setForm] = useState({
+    name: shop.name,
+    category: shop.category,
+    contact: shop.contact,
+    description: shop.description || "",
+    logo_url: shop.logo_url || "",
+    address: shop.address || "",
+    phone: shop.phone || "",
+    hours: shop.hours || "",
+    cashback_rate: String(Math.round(shop.cashback_rate * 100)),
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  function setField(key, value) {
+    setForm((f) => ({ ...f, [key]: value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+    const rate = Number(form.cashback_rate) / 100;
+    if (!Number.isFinite(rate) || rate < 0 || rate > 100) {
+      setError("Cashback rate must be a number between 0 and 100");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await api.admin.updateShop(shop.id, { ...form, cashback_rate: rate });
+      toast.success(`${form.name} updated`);
+      onSaved();
+      onClose();
+    } catch (err) {
+      const message = err instanceof ApiError ? err.message : "Could not update shop";
+      setError(message);
+      toast.error(message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="scan-sheet-backdrop" onClick={onClose}>
+      <div className="scan-sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="sheet-header">
+          <h2 className="text-title3">Edit {shop.name}</h2>
+          <button className="btn btn-icon" onClick={onClose} aria-label="Close">
+            <XIcon />
+          </button>
+        </div>
+        <form className="form-grid" onSubmit={handleSubmit}>
+          <div className="field">
+            <label htmlFor="es-name">Shop name</label>
+            <input id="es-name" value={form.name} onChange={(e) => setField("name", e.target.value)} required />
+          </div>
+          <div className="field">
+            <label htmlFor="es-category">Category</label>
+            <input
+              id="es-category"
+              value={form.category}
+              onChange={(e) => setField("category", e.target.value)}
+              required
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="es-contact">Login contact (email/phone)</label>
+            <input id="es-contact" value={form.contact} onChange={(e) => setField("contact", e.target.value)} required />
+          </div>
+          <div className="field">
+            <label htmlFor="es-rate">Cashback rate (%)</label>
+            <input
+              id="es-rate"
+              type="text"
+              inputMode="decimal"
+              value={form.cashback_rate}
+              onChange={(e) => setField("cashback_rate", e.target.value)}
+              required
+            />
+          </div>
+          <div className="field span-2">
+            <label htmlFor="es-desc">Description</label>
+            <input id="es-desc" value={form.description} onChange={(e) => setField("description", e.target.value)} />
+          </div>
+          <div className="field span-2">
+            <label htmlFor="es-logo">Logo URL</label>
+            <input id="es-logo" type="url" value={form.logo_url} onChange={(e) => setField("logo_url", e.target.value)} />
+          </div>
+          <div className="field span-2">
+            <label htmlFor="es-address">Address</label>
+            <input id="es-address" value={form.address} onChange={(e) => setField("address", e.target.value)} />
+          </div>
+          <div className="field">
+            <label htmlFor="es-phone">Phone</label>
+            <input id="es-phone" type="tel" value={form.phone} onChange={(e) => setField("phone", e.target.value)} />
+          </div>
+          <div className="field">
+            <label htmlFor="es-hours">Hours</label>
+            <input id="es-hours" value={form.hours} onChange={(e) => setField("hours", e.target.value)} />
+          </div>
+          {error && (
+            <p className="form-error span-2" style={{ gridColumn: "1 / -1" }}>
+              {error}
+            </p>
+          )}
+          <button type="submit" className="btn btn-primary" style={{ gridColumn: "1 / -1" }} disabled={submitting}>
+            {submitting ? <span className="spinner" /> : "Save changes"}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 
@@ -369,6 +499,7 @@ function CustomersTab({ shops }) {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [adjustingCustomer, setAdjustingCustomer] = useState(null);
+  const [editingCustomer, setEditingCustomer] = useState(null);
 
   function load() {
     setLoading(true);
@@ -443,13 +574,22 @@ function CustomersTab({ shops }) {
                       </div>
                     </td>
                     <td>
-                      <button
-                        className="btn btn-icon"
-                        onClick={() => setAdjustingCustomer(c)}
-                        aria-label={`Adjust ${c.name}'s wallet balance`}
-                      >
-                        <EditIcon width={16} height={16} />
-                      </button>
+                      <div className="table-row-actions">
+                        <button
+                          className="btn btn-icon"
+                          onClick={() => setEditingCustomer(c)}
+                          aria-label={`Edit ${c.name}`}
+                        >
+                          <PersonIcon width={16} height={16} />
+                        </button>
+                        <button
+                          className="btn btn-icon"
+                          onClick={() => setAdjustingCustomer(c)}
+                          aria-label={`Adjust ${c.name}'s wallet balance`}
+                        >
+                          <EditIcon width={16} height={16} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -468,7 +608,63 @@ function CustomersTab({ shops }) {
           onAdjusted={load}
         />
       )}
+      {editingCustomer && (
+        <EditCustomerModal customer={editingCustomer} onClose={() => setEditingCustomer(null)} onSaved={load} />
+      )}
     </>
+  );
+}
+
+function EditCustomerModal({ customer, onClose, onSaved }) {
+  const toast = useToast();
+  const [name, setName] = useState(customer.name);
+  const [contact, setContact] = useState(customer.contact);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+    setSubmitting(true);
+    try {
+      await api.admin.updateCustomer(customer.id, { name, contact });
+      toast.success(`${name} updated`);
+      onSaved();
+      onClose();
+    } catch (err) {
+      const message = err instanceof ApiError ? err.message : "Could not update customer";
+      setError(message);
+      toast.error(message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="scan-sheet-backdrop" onClick={onClose}>
+      <div className="scan-sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="sheet-header">
+          <h2 className="text-title3">Edit {customer.name}</h2>
+          <button className="btn btn-icon" onClick={onClose} aria-label="Close">
+            <XIcon />
+          </button>
+        </div>
+        <form className="stack" onSubmit={handleSubmit}>
+          <div className="field">
+            <label htmlFor="ec-name">Name</label>
+            <input id="ec-name" value={name} onChange={(e) => setName(e.target.value)} required />
+          </div>
+          <div className="field">
+            <label htmlFor="ec-contact">Contact (email/phone)</label>
+            <input id="ec-contact" value={contact} onChange={(e) => setContact(e.target.value)} required />
+          </div>
+          {error && <p className="form-error">{error}</p>}
+          <button type="submit" className="btn btn-primary" disabled={submitting}>
+            {submitting ? <span className="spinner" /> : "Save changes"}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

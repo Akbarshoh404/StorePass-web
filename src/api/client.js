@@ -105,6 +105,7 @@ export const api = {
     updateShop: (id, payload) => request(`/admin/shops/${id}`, { method: "PATCH", body: payload }),
     listShops: () => request("/admin/shops"),
     listCustomers: () => request("/admin/customers"),
+    updateCustomer: (id, payload) => request(`/admin/customers/${id}`, { method: "PATCH", body: payload }),
     suspendCustomer: (id) => request(`/admin/customers/${id}/suspend`, { method: "POST" }),
     reactivateCustomer: (id) => request(`/admin/customers/${id}/reactivate`, { method: "POST" }),
     adjustWallet: (payload) => request("/admin/wallets/adjust", { method: "POST", body: payload }),
