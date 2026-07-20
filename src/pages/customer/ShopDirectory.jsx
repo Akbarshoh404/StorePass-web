@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { api, ApiError } from "../../api/client";
 import { useToast } from "../../context/ToastContext";
 import CustomerNav from "../../components/CustomerNav";
+import ShopLogo from "../../components/ShopLogo";
 import { StarRating } from "../../components/StarRating";
 import { SearchIcon, EmptyBoxIcon, WalletIcon } from "../../components/Icons";
 import { formatMoney } from "../../utils/format";
@@ -79,8 +80,13 @@ export default function ShopDirectory() {
                 style={{ animationDelay: `${Math.min(i, 8) * 0.03}s` }}
                 key={shop.id}
               >
-                <span className="category-pill">{shop.category}</span>
-                <span className="shop-name">{shop.name}</span>
+                <div className="shop-card-top">
+                  <ShopLogo logoUrl={shop.logo_url} />
+                  <div>
+                    <span className="category-pill">{shop.category}</span>
+                    <span className="shop-name">{shop.name}</span>
+                  </div>
+                </div>
                 <p className="shop-desc">{shop.description || "No description yet."}</p>
                 <div className="shop-meta">
                   {shop.average_rating != null ? (

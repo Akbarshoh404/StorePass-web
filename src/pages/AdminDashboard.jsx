@@ -101,6 +101,7 @@ function ShopsTab({ shops, loading, onChanged }) {
     contact: "",
     password: "",
     description: "",
+    logo_url: "",
     cashback_rate: "1",
   });
   const [submitting, setSubmitting] = useState(false);
@@ -122,7 +123,7 @@ function ShopsTab({ shops, loading, onChanged }) {
     try {
       await api.admin.createShop({ ...form, cashback_rate: rate });
       toast.success(`${form.name} added`);
-      setForm({ name: "", category: "", contact: "", password: "", description: "", cashback_rate: "1" });
+      setForm({ name: "", category: "", contact: "", password: "", description: "", logo_url: "", cashback_rate: "1" });
       setShowForm(false);
       onChanged();
     } catch (err) {
@@ -237,6 +238,16 @@ function ShopsTab({ shops, loading, onChanged }) {
                 placeholder="Optional — shown on the shop's public page"
                 value={form.description}
                 onChange={(e) => setField("description", e.target.value)}
+              />
+            </div>
+            <div className="field span-2">
+              <label htmlFor="s-logo">Logo URL</label>
+              <input
+                id="s-logo"
+                type="url"
+                placeholder="Optional — https://…"
+                value={form.logo_url}
+                onChange={(e) => setField("logo_url", e.target.value)}
               />
             </div>
             {error && (

@@ -4,6 +4,7 @@ import { api, ApiError } from "../../api/client";
 import { useToast } from "../../context/ToastContext";
 import CustomerNav from "../../components/CustomerNav";
 import ScanSheet from "../../components/ScanSheet";
+import ShopLogo from "../../components/ShopLogo";
 import { StarRating } from "../../components/StarRating";
 import { ScanIcon, WalletIcon, TagIcon, EmptyBoxIcon } from "../../components/Icons";
 import { formatMoney, formatDateTime } from "../../utils/format";
@@ -55,22 +56,25 @@ export default function ShopDetail() {
           <>
             <div className="shop-hero fade-up">
               <div className="shop-hero-top">
-                <div>
-                  <span className="category-pill">{shop.category}</span>
-                  <h1 className="text-title1" style={{ marginTop: 8 }}>
-                    {shop.name}
-                  </h1>
-                  {shop.average_rating != null ? (
-                    <span className="rating-inline" style={{ marginTop: 6 }}>
-                      <StarRating value={shop.average_rating} size="lg" />
-                      {shop.average_rating.toFixed(1)} · {shop.review_count} review
-                      {shop.review_count === 1 ? "" : "s"}
-                    </span>
-                  ) : (
-                    <p className="text-footnote text-tertiary" style={{ marginTop: 6 }}>
-                      No reviews yet
-                    </p>
-                  )}
+                <div className="shop-card-top">
+                  <ShopLogo logoUrl={shop.logo_url} size={56} />
+                  <div>
+                    <span className="category-pill">{shop.category}</span>
+                    <h1 className="text-title1" style={{ marginTop: 8 }}>
+                      {shop.name}
+                    </h1>
+                    {shop.average_rating != null ? (
+                      <span className="rating-inline" style={{ marginTop: 6 }}>
+                        <StarRating value={shop.average_rating} size="lg" />
+                        {shop.average_rating.toFixed(1)} · {shop.review_count} review
+                        {shop.review_count === 1 ? "" : "s"}
+                      </span>
+                    ) : (
+                      <p className="text-footnote text-tertiary" style={{ marginTop: 6 }}>
+                        No reviews yet
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <span className="text-footnote text-secondary">
                   Earn {(shop.cashback_rate * 100).toFixed(0)}% cashback here
